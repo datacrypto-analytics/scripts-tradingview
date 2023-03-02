@@ -1,0 +1,15 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © DataCryptoAnalytics
+
+//@version=5
+indicator('Bitcoin Market Capitalization (QUANDL:BCHAIN/MKTCP)', precision=5, format=format.volume)
+
+BMC      = request.quandl('BCHAIN/MKTCP', barmerge.gaps_off, 0)
+showMA   = input.bool(true, group='Configurações ⚙️', title='Mostrar Média Móvel')
+azu      = color.new(#ff8c05, 40)
+gre      = color.new(#ff0008, 20)
+color_3  = color.from_gradient(BMC, 0, 1000000000000, color.rgb(139, 0, 0, 40), color.rgb(255, 140, 5, 40))
+
+plot(BMC, color=color_3, style=plot.style_area)
+plot(showMA ? ta.sma(BMC, 6) : na, style=plot.style_line, color=gre)
+
