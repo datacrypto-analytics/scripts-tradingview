@@ -1,0 +1,27 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © DataCryptoAnalytics
+//
+//@version=4
+study("Bitcoin Wallet Transaction Volume (QUANDL:BCHAIN/MWTRV)", format=format.volume)
+
+showMA   = input(true, group = "Configurações ⚙️", title="Mostrar Média Móvel")
+sma      = input(6, group = "Configurações ⚙️", title='Média Móvel')
+BWTV     = quandl("BCHAIN/MWTRV", barmerge.gaps_off, 0)
+
+periodo  = input(20,'Period')
+fator    =input(1.25,'Proportion to average:(1,25 = 125% of average', minval=0)
+up       = close > open 
+down     = open>close
+lime     = #811c1c
+red      = #811c1c
+silver   = color.new(#ff8c05, 40)
+gray     = color.new(#ff8c05, 40)
+
+pesado   = BWTV>(ema(BWTV,periodo)*fator)
+palette  = (pesado and up)? lime:(pesado and down)?red:up?silver:gray
+
+azu      = color.new(#ff8c05, 40)
+gre      = color.new(#ff0008, 20)
+
+plot(BWTV, color=palette, style=plot.style_columns)
+plot(showMA ? sma(BWTV,sma) : na, style=plot.style_line, color=gre)
