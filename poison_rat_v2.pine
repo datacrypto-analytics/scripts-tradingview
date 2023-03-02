@@ -1,5 +1,5 @@
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
-// © DataCryptoAnalytics 
+// © DataCrypto Analytics 
 //
 // https://datacryptoanalytics.com/
 //
@@ -18,8 +18,10 @@ verde     = color.new(#1b5e20, 0)
 verm      = color.new(#811c1c, 0)
 red       = color.new(#a30202, 0)
 bran      = color.new(#ffffff, 65)
+
 up        = close > open 
 down      = open > close
+
 vol       = volume
 silver    = color.silver
 gray      = color.new(#4a4a49, 0)

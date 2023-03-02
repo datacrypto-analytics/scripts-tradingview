@@ -1,0 +1,35 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © DataCrypto Analytics 
+//
+// https://datacryptoanalytics.com/
+//
+// Twitter: @dc_analytics
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//@version=4
+study("Cross SMA - DataCrypto Analytics", "", true)
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///        COLETA DE DADOS
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+SMA30  = sma(close, 30)
+SMA100 = sma(close, 100)
+
+xUp    = crossover(SMA100, SMA30)
+xDw    = crossunder(SMA100, SMA30)
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///    ALERTAS
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+if xUp
+    // Trigger the alert the first time a cross occurs during the real-time bar.
+    alert("SMA30 (" + tostring(close) + ") cruzou SMA100 (" + tostring(SMA30) +  ").", alert.freq_once_per_bar)
+if xDw
+    alert("SMA30 (" + tostring(close) + ") cruzou SMA100 (" + tostring(SMA30) +  ").", alert.freq_once_per_bar)
+////////////////////////////////////////////////////////////////////////////////
+///   PLOT
+////////////////////////////////////////////////////////////////////////////////
+P1 = plot(SMA30, color=color.green, title="Plot SMA30", transp=80)
+P2 = plot(SMA100, color=color.red, title="Plot SMA100", transp=80)
+
+plotshape(xUp, location=location.abovebar, style=shape.labeldown, color=color.black, title="Plot SELL",size=size.small, text = "Sell ⇣", textcolor=color.red, transp=0, offset=0)
+plotshape(xDw, location=location.belowbar, style=shape.labelup, color=color.black, title="Plot BUY",size=size.small, text = "Buy ⇡", textcolor=color.green, transp=0, offset=0)
+fill(P1, P2, color=#e07800, transp=92)
